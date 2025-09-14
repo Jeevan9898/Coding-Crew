@@ -179,7 +179,7 @@
               <ul>
                 
                 <li><a href="myposts.html"><img src="https://via.placeholder.com/16" alt="Icon" > My Posts</a></li>
-                <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Saved Posts</a></li>
+                <li><a href="profile.html"><img src="https://via.placeholder.com/16" alt="Icon"> Saved Posts</a></li>
                 <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Trending Now</a></li>
                 <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Following</a></li>
               </ul>
@@ -376,5 +376,62 @@
                 window.location.href = "myposts.html";
             });
         </script>
+
+       
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+      const postsContainer = document.getElementById("posts-container");
+  
+      // Load posts from localStorage
+      const storedPosts = JSON.parse(localStorage.getItem("artisanPosts")) || [];
+  
+      // Helper to create a post card
+      function createPostCard(post) {
+          const card = document.createElement("div");
+          card.classList.add("story-card");
+          card.innerHTML = `
+              <div class="card-header">
+                  <img src="${post.avatar || 'https://placehold.co/32x32'}" class="artisan-avatar" alt="Avatar">
+                  <span class="artisan-name">${post.postName || 'Anonymous'}</span>
+              </div>
+              <img src="${post.image}" class="card-image" alt="Artisan Work">
+              <h3 class="card-title">${post.title || ''}<br>${post.description || ''}</h3>
+              <div class="card-actions">
+                  <button class="like-btn"><img src="https://placehold.co/16x16" alt="Like"> Like</button>
+                  <button class="comment-btn"><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
+                  <button class="save-btn" data-title="${post.title}" data-image="${post.image}">
+                      <img src="https://placehold.co/16x16" alt="Save"> Save
+                  </button>
+                  <button class="shop-now-btn">Shop Now</button>
+              </div>
+          `;
+          postsContainer.prepend(card);
+      }
+  
+      // Render all stored posts
+      storedPosts.forEach(post => createPostCard(post));
+  
+      // Event delegation for Save buttons
+      postsContainer.addEventListener("click", (e) => {
+          const btn = e.target.closest(".save-btn");
+          if (!btn) return;
+  
+          const title = btn.dataset.title;
+          const image = btn.dataset.image;
+  
+          let savedPosts = JSON.parse(localStorage.getItem("profilePins")) || [];
+  
+          if (!savedPosts.find(p => p.title === title && p.image === image)) {
+              savedPosts.push({ title, image });
+              localStorage.setItem("profilePins", JSON.stringify(savedPosts));
+              alert("Post saved to your profile!");
+          } else {
+              alert("This post is already saved!");
+          }
+      });
+  });
+  </script>
+  
+  
 </body>
 </html>
