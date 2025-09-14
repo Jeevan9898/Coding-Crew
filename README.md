@@ -16,5 +16,5 @@ Connect with fellow artisans, collaborate on collections, and participate in vir
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/Jeevan9898/Coding-Crew.git
+cd Coding-Crew
