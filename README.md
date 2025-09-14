@@ -10,3 +10,11 @@ Easy-to-use, customizable online shops for artisans.
 
 🤝 Community & Collaboration Tools
 Connect with fellow artisans, collaborate on collections, and participate in virtual craft fairs and online workshops.
+
+### Installation
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/yourusername/your-repo-name.git
+cd your-repo-name
