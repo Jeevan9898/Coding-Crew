@@ -1,94 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>User Profile - Artisan Echoes</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 40px; }
-    .profile-container {
-      max-width: 800px; margin: auto; background: #fff; padding: 25px;
-      border-radius: 10px; box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      display: flex; gap: 30px;
-    }
-    .profile-left { flex: 1; text-align: center; }
-    .profile-left img {
-      width: 150px; height: 150px; border-radius: 50%;
-      border: 3px solid #FD7B6B; object-fit: cover;
-    }
-    .profile-right { flex: 2; }
-    h2 { margin-top: 0; }
-    button {
-      margin-top: 12px; padding: 8px 15px;
-      border: none; border-radius: 6px;
-      cursor: pointer; font-weight: bold; display: block; width: 100%;
-    }
-    .delete-btn { background: #ff4d4d; color: #fff; }
-    .delete-btn:hover { background: #cc0000; }
-    .logout-btn { background: #FD7B6B; color: #fff; }
-    .logout-btn:hover { background: #e66a5c; }
-    .delete-profile-btn { background: #333; color: #fff; }
-    .delete-profile-btn:hover { background: #000; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artisan Echoes - Profile</title>
+<style>
+/* ===== General ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
+body { background: #f5f5f5; color: #333; }
+
+/* ===== Navbar ===== */
+.navbar { background: #fff; padding: 10px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+.navbar .logo { font-weight: bold; font-size: 20px; }
+.navbar .nav-links { display: flex; gap: 15px; }
+.navbar .nav-links a { font-weight: 600; color: #333; }
+.navbar .nav-links a:hover { color: #FD7B6B; }
+
+/* ===== Cover Photo ===== */
+.cover-photo { width: 100%; height: 250px; background: url('https://via.placeholder.com/1200x250') center/cover no-repeat; position: relative; }
+
+/* ===== Profile Info ===== */
+.profile-container { max-width: 1200px; margin: -60px auto 20px; padding: 0 20px; display: flex; flex-direction: column; align-items: center; }
+.profile-avatar { width: 120px; height: 120px; border-radius: 50%; border: 5px solid #fff; object-fit: cover; cursor: pointer; }
+.profile-name { font-size: 28px; font-weight: bold; margin-top: 10px; }
+.profile-headline { font-size: 14px; color: #666; margin: 5px 0 15px; text-align: center; }
+.profile-stats { display: flex; gap: 30px; margin-bottom: 15px; }
+.profile-stats div { font-size: 14px; text-align: center; }
+.profile-actions { display: flex; gap: 10px; margin-bottom: 30px; }
+.follow-btn { background: #FD7B6B; color: #fff; padding: 8px 20px; border-radius: 25px; border: none; font-weight: 600; cursor: pointer; }
+.follow-btn:hover { background: #e66a5c; }
+.edit-btn { background: #5C5470; color: #fff; padding: 8px 20px; border-radius: 25px; border: none; font-weight: 600; cursor: pointer; }
+.edit-btn:hover { background: #483b5a; }
+
+/* ===== Bio / Experience / Skills ===== */
+.bio-section, .experience-section, .skills-section { width: 100%; background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.section-title { font-weight: 600; margin-bottom: 10px; font-size: 18px; }
+
+/* ===== Tabs ===== */
+.profile-tabs { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
+.profile-tabs button { background: none; border: none; padding: 10px 0; font-weight: 600; cursor: pointer; position: relative; }
+.profile-tabs button.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 3px; background: #FD7B6B; border-radius: 2px; }
+
+/* ===== Pins / Grid ===== */
+.grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto 40px; padding: 0 20px; }
+.grid-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.2s; position: relative; }
+.grid-card:hover { transform: translateY(-5px); }
+.grid-card img { width: 100%; display: block; }
+.grid-card-info { padding: 10px; }
+.grid-card-info h3 { font-size: 16px; font-weight: 600; }
+.grid-card-info p { font-size: 12px; color: #666; margin-top: 5px; }
+.remove-btn { position: absolute; top: 10px; right: 10px; background: #ff4d4d; border: none; color: #fff; padding: 5px 8px; border-radius: 5px; font-size: 12px; cursor: pointer; }
+.remove-btn:hover { background: #e60000; }
+
+/* ===== Story Highlights ===== */
+.story-highlights { display: flex; gap: 15px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 10px; }
+.highlight { flex: 0 0 auto; text-align: center; }
+.highlight img { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #FD7B6B; object-fit: cover; cursor: pointer; }
+.highlight span { display: block; font-size: 12px; margin-top: 5px; }
+
+/* ===== Floating Add Button ===== */
+.floating-add-btn { position: fixed; bottom: 40px; right: 40px; width: 60px; height: 60px; background: #FD7B6B; color: #fff; border: none; border-radius: 50%; font-size: 28px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; }
+.floating-add-btn:hover { background: #e66a5c; transform: translateY(-5px); }
+</style>
 </head>
 <body>
-  <div class="profile-container">
-    <div class="profile-left">
-      <img id="profilePic" src="avatar.png" alt="Profile Picture">
-      <button class="delete-btn" id="deletePhotoBtn">Delete Photo</button>
-    </div>
-    <div class="profile-right">
-      <h2 id="userName">User Name</h2>
-      <p><strong>Email:</strong> <span id="userEmail"></span></p>
-      <p><strong>Bio:</strong> <span id="userBio"></span></p>
-      
-      <hr>
-      <button class="logout-btn" id="logoutBtn">Log Out</button>
-      <button class="delete-profile-btn" id="deleteProfileBtn">Delete Profile</button>
-    </div>
+
+<!-- Navbar -->
+<div class="navbar">
+  <div class="logo">Artisan Echoes</div>
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="#">Discover</a>
+    <a href="#">Profile</a>
+  </div>
+</div>
+
+<!-- Cover Photo -->
+<div class="cover-photo"></div>
+
+<!-- Profile Container -->
+<div class="profile-container">
+  <img src="https://via.placeholder.com/120" alt="Avatar" class="profile-avatar" id="profile-avatar">
+  <div class="profile-name" id="profile-name"></div>
+  <div class="profile-headline" id="profile-headline"></div>
+
+  <!-- Story Highlights -->
+  <div class="story-highlights" id="story-highlights"></div>
+
+  <div class="profile-stats">
+    <div><strong id="followers-count">0</strong><br>Followers</div>
+    <div><strong id="following-count">0</strong><br>Following</div>
+    <div><strong id="posts-count">0</strong><br>Posts</div>
+    <div><strong id="views-count">0</strong><br>Views</div>
   </div>
 
-  <script>
-    const defaultAvatar = "avatar.png";
-    const profilePic = document.getElementById("profilePic");
-    const deletePhotoBtn = document.getElementById("deletePhotoBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-    const deleteProfileBtn = document.getElementById("deleteProfileBtn");
-  
-    let userData = JSON.parse(localStorage.getItem("artisanUser"));
-  
-    if (userData) {
-      document.getElementById("userName").textContent = userData.name;
-      document.getElementById("userEmail").textContent = userData.email;
-      document.getElementById("userBio").textContent = userData.bio;
-      profilePic.src = userData.photo || defaultAvatar;
-    }
-  
-    // Delete only photo
-    deletePhotoBtn.addEventListener("click", () => {
-      if (userData) {
-        userData.photo = "";
-        localStorage.setItem("artisanUser", JSON.stringify(userData));
-        profilePic.src = defaultAvatar;
-        alert("Profile photo deleted.");
+  <div class="profile-actions">
+    <button class="edit-btn" id="edit-profile-btn">Edit Profile</button>
+  </div>
+</div>
+
+<!-- Bio / Experience / Skills -->
+<div class="bio-section">
+  <div class="section-title">About</div>
+  <p id="bio-content"></p>
+</div>
+
+<div class="experience-section">
+  <div class="section-title">Experience</div>
+  <p id="experience-content"></p>
+</div>
+
+<div class="skills-section">
+  <div class="section-title">Skills</div>
+  <p id="skills-content"></p>
+</div>
+
+<!-- Tabs -->
+<div class="profile-tabs">
+  <button class="active" data-tab="pins">Pins</button>
+  <button data-tab="boards">Boards</button>
+  <button data-tab="posts">Posts</button>
+</div>
+
+<!-- Pins / Posts Grid -->
+<div class="grid-container" id="grid-container"></div>
+
+<!-- Floating Add Button -->
+<button class="floating-add-btn" onclick="window.location.href='newpost.html'">+</button>
+
+<script>
+// Load profile data
+function loadProfile() {
+  const profile = JSON.parse(localStorage.getItem("profileData")) || {
+    avatar: "https://via.placeholder.com/120",
+    name: "",
+    headline: "",
+    bio: "",
+    experience: "",
+    skills: "",
+    storyHighlights: []
+  };
+
+  document.getElementById("profile-avatar").src = profile.avatar;
+  document.getElementById("profile-name").textContent = profile.name || "Your Name";
+  document.getElementById("profile-headline").textContent = profile.headline || "Your headline here";
+  document.getElementById("bio-content").textContent = profile.bio || "Tell something about yourself.";
+  document.getElementById("experience-content").textContent = profile.experience || "Add your experience.";
+  document.getElementById("skills-content").textContent = profile.skills || "Add your skills.";
+
+  const highlightsContainer = document.getElementById("story-highlights");
+  highlightsContainer.innerHTML = "";
+  if(profile.storyHighlights.length){
+    profile.storyHighlights.forEach(h => {
+      const div = document.createElement("div");
+      div.className = "highlight";
+      div.innerHTML = `<img src="${h.image}" alt=""><span>${h.name}</span>`;
+      highlightsContainer.appendChild(div);
+    });
+  } else {
+    highlightsContainer.innerHTML = "<p>No story highlights yet.</p>";
+  }
+}
+
+// Load grid (pins, posts, boards)
+function loadGrid(tab="pins") {
+  const grid = document.getElementById("grid-container");
+  grid.innerHTML = "";
+
+  let items = [];
+  let storageKey = "";
+
+  if(tab === "pins") {
+    storageKey = "profilePins";
+  } else if(tab === "posts") {
+    storageKey = "artisanPosts";
+  } else if(tab === "boards") {
+    grid.innerHTML = "<p style='text-align:center;'>No boards yet.</p>";
+    document.getElementById("posts-count").textContent = 0;
+    return;
+  }
+
+  items = JSON.parse(localStorage.getItem(storageKey)) || [];
+
+  items.forEach((item, index) => {
+    const card = document.createElement("div");
+    card.classList.add("grid-card");
+    card.innerHTML = `
+      <img src="${item.image}" alt="Post">
+      <div class="grid-card-info">
+        <h3>${item.title}</h3>
+        <p>${item.description || ""}</p>
+      </div>
+      <button class="remove-btn">Remove</button>
+    `;
+
+    // Remove button functionality
+    card.querySelector(".remove-btn").addEventListener("click", () => {
+      if(confirm("Are you sure you want to remove this item?")){
+        items.splice(index, 1);
+        localStorage.setItem(storageKey, JSON.stringify(items));
+        loadGrid(tab); // Reload grid after removal
       }
     });
-  
-    // Log out → go to index.html
-    logoutBtn.addEventListener("click", () => {
-      alert("You have been logged out.");
-      window.location.href = "index.html";
-    });
-  
-    // Delete profile completely → go to index.html
-    deleteProfileBtn.addEventListener("click", () => {
-      if (confirm("Are you sure you want to delete your profile? This action cannot be undone.")) {
-        localStorage.removeItem("artisanUser");
-        localStorage.removeItem("artisanPosts"); // optional: also clear posts
-        alert("Profile deleted.");
-        window.location.href = "index.html";
-      }
-    });
-  </script>
-  
+
+    grid.prepend(card);
+  });
+
+  document.getElementById("posts-count").textContent = items.length;
+}
+
+// Tabs click event
+document.querySelectorAll(".profile-tabs button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".profile-tabs button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    loadGrid(btn.dataset.tab);
+  });
+});
+
+// Edit profile button
+document.getElementById("edit-profile-btn").addEventListener("click", () => {
+  window.location.href = "editprofile.html";
+});
+
+// Avatar click to change
+document.getElementById("profile-avatar").addEventListener("click", () => {
+  const newAvatar = prompt("Enter image URL for your profile avatar:");
+  if(newAvatar){
+    document.getElementById("profile-avatar").src = newAvatar;
+    const profile = JSON.parse(localStorage.getItem("profileData")) || {};
+    profile.avatar = newAvatar;
+    localStorage.setItem("profileData", JSON.stringify(profile));
+  }
+});
+
+// Initial load
+document.addEventListener("DOMContentLoaded", () => {
+  loadProfile();
+  loadGrid("pins");
+});
+</script>
 </body>
 </html>
