@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Artisan Echoes</title>
+<style>
+  body { margin: 0; font-family: Arial,sans-serif; background: #fdfaf6; display: flex; height: 100vh; }
+  .container { display: flex; width: 100%; }
+  .left { flex:1; background:#f0e6e0; display:flex; justify-content:center; align-items:center; flex-direction:column; }
+  .left img { width:200px;height:200px;border-radius:50%;border:4px solid #6d4c41; object-fit:cover; }
+  .left h2 { margin-top:15px;color:#3e2723; }
+  .right { flex:1.2; display:flex; justify-content:center; align-items:center; background:#fff; box-shadow:-4px 0 10px rgba(0,0,0,0.1); }
+  .form-container { width:80%; max-width:400px; }
+  h2 { text-align:center; color:#4e342e; margin-bottom:20px; }
+  input,textarea,button { width:100%; padding:12px; margin:8px 0; border-radius:6px; border:1px solid #ccc; font-size:16px; }
+  button { background:#FD7B6B; color:white; font-weight:bold; border:none; cursor:pointer; transition:0.3s; }
+  button:hover { background:#e66a5c; }
+  .error { color:red; font-size:14px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="left">
+    <img src="avatar.png" alt="Avatar" id="previewPic">
+    <h2>Welcome to Artisan Echoes</h2>
+  </div>
+  <div class="right">
+    <div class="form-container">
+      <h2 id="formTitle">Login</h2>
+      <form id="loginForm">
+        <div id="extraFields">
+          <input type="text" id="name" placeholder="Enter your name">
+          <textarea id="bio" placeholder="Short bio..."></textarea>
+        </div>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <button type="submit">Continue</button>
+        <p id="errorMsg" class="error"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+const extraFields = document.getElementById("extraFields");
+const formTitle = document.getElementById("formTitle");
+const errorMsg = document.getElementById("errorMsg");
+const form = document.getElementById("loginForm");
+
+let savedUser = JSON.parse(localStorage.getItem("artisanUser"));
+let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+// If already logged in → redirect to index.html
+if(loggedInUser) {
+  window.location.href = "index.html";
+}
+
+// If user exists → show only email login
+if(savedUser) {
+  extraFields.style.display = "none";
+  formTitle.textContent = "Login";
+} else {
+  formTitle.textContent = "Register";
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  errorMsg.textContent = "";
+  const email = document.getElementById("email").value.trim();
+
+  if(savedUser) {
+    // Login
+    if(email === savedUser.email) {
+      localStorage.setItem("loggedInUser", JSON.stringify(savedUser));
+      window.location.href = "index.html";
+    } else {
+      errorMsg.textContent = "❌ Email not found. Please try again.";
+    }
+  } else {
+    // Registration
+    const name = document.getElementById("name").value.trim();
+    const bio = document.getElementById("bio").value.trim();
+    if(!name || !bio || !email) {
+      errorMsg.textContent = "Please fill all fields.";
+      return;
+    }
+    const newUser = { name,email,bio,photo:"" };
+    localStorage.setItem("artisanUser", JSON.stringify(newUser));
+    localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+    window.location.href = "index.html";
+  }
+});
+</script>
+</body>
+</html>

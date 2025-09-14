@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile - Artisan Echoes</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 40px; }
+    .profile-container {
+      max-width: 800px; margin: auto; background: #fff; padding: 25px;
+      border-radius: 10px; box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      display: flex; gap: 30px;
+    }
+    .profile-left { flex: 1; text-align: center; }
+    .profile-left img {
+      width: 150px; height: 150px; border-radius: 50%;
+      border: 3px solid #FD7B6B; object-fit: cover;
+    }
+    .profile-right { flex: 2; }
+    h2 { margin-top: 0; }
+    button {
+      margin-top: 12px; padding: 8px 15px;
+      border: none; border-radius: 6px;
+      cursor: pointer; font-weight: bold; display: block; width: 100%;
+    }
+    .delete-btn { background: #ff4d4d; color: #fff; }
+    .delete-btn:hover { background: #cc0000; }
+    .logout-btn { background: #FD7B6B; color: #fff; }
+    .logout-btn:hover { background: #e66a5c; }
+    .delete-profile-btn { background: #333; color: #fff; }
+    .delete-profile-btn:hover { background: #000; }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <div class="profile-left">
+      <img id="profilePic" src="avatar.png" alt="Profile Picture">
+      <button class="delete-btn" id="deletePhotoBtn">Delete Photo</button>
+    </div>
+    <div class="profile-right">
+      <h2 id="userName">User Name</h2>
+      <p><strong>Email:</strong> <span id="userEmail"></span></p>
+      <p><strong>Bio:</strong> <span id="userBio"></span></p>
+      
+      <hr>
+      <button class="logout-btn" id="logoutBtn">Log Out</button>
+      <button class="delete-profile-btn" id="deleteProfileBtn">Delete Profile</button>
+    </div>
+  </div>
+
+  <script>
+    const defaultAvatar = "avatar.png";
+    const profilePic = document.getElementById("profilePic");
+    const deletePhotoBtn = document.getElementById("deletePhotoBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const deleteProfileBtn = document.getElementById("deleteProfileBtn");
+  
+    let userData = JSON.parse(localStorage.getItem("artisanUser"));
+  
+    if (userData) {
+      document.getElementById("userName").textContent = userData.name;
+      document.getElementById("userEmail").textContent = userData.email;
+      document.getElementById("userBio").textContent = userData.bio;
+      profilePic.src = userData.photo || defaultAvatar;
+    }
+  
+    // Delete only photo
+    deletePhotoBtn.addEventListener("click", () => {
+      if (userData) {
+        userData.photo = "";
+        localStorage.setItem("artisanUser", JSON.stringify(userData));
+        profilePic.src = defaultAvatar;
+        alert("Profile photo deleted.");
+      }
+    });
+  
+    // Log out → go to index.html
+    logoutBtn.addEventListener("click", () => {
+      alert("You have been logged out.");
+      window.location.href = "index.html";
+    });
+  
+    // Delete profile completely → go to index.html
+    deleteProfileBtn.addEventListener("click", () => {
+      if (confirm("Are you sure you want to delete your profile? This action cannot be undone.")) {
+        localStorage.removeItem("artisanUser");
+        localStorage.removeItem("artisanPosts"); // optional: also clear posts
+        alert("Profile deleted.");
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+  
+</body>
+</html>

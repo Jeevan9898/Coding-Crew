@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan Echoes</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* === Your original CSS === */
+        :root {
+            --primary-color: #5C5470;
+            --secondary-color: #B9B4C7;
+            --accent-color: #FD7B6B;
+            --bg-dark: #2A2A2A;
+            --bg-light: #F5F5F5;
+            --card-bg: #FFFFFF;
+            --text-color: #333333;
+            --border-color: #E0E0E0;
+            --font-family-primary: 'Arial', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family-primary);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--bg-dark);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .navbar .logo { display: flex; align-items: center; font-size: 24px; font-weight: bold; color: white; }
+        .navbar .logo img { margin-right: 10px; border-radius: 5px; }
+        .navbar .main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+        .navbar .main-nav ul li { margin-right: 25px; }
+        .navbar .main-nav ul li a { color: white; text-decoration: none; font-weight: 600; padding-bottom: 5px; position: relative; }
+        .navbar .main-nav ul li a.active,
+        .navbar .main-nav ul li a:hover { color: var(--accent-color); }
+        .navbar .main-nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+        .navbar .header-right { display: flex; align-items: center; }
+        .navbar .search-bar { position: relative; margin-right: 20px; background-color: #444; border-radius: 20px; padding: 5px 15px; display: flex; align-items: center; }
+        .navbar .search-bar input { background: transparent; border: none; outline: none; color: white; padding: 5px 0; width: 120px; }
+        .navbar .search-bar input::placeholder { color: #bbb; }
+        .navbar .search-bar button { background: none; border: none; cursor: pointer; padding: 0; display: flex; }
+        .navbar .search-bar button img { filter: invert(1); }
+        .navbar .user-profile { display: flex; align-items: center; cursor: pointer; }
+        .navbar .user-profile img { border-radius: 50%; margin-left: 10px; }
+        .navbar .user-btn { background-color: var(--accent-color); color: white; border: none; padding: 6px 15px; border-radius: 25px; margin-left: 10px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .navbar .user-btn:hover { background-color: #e66a5c; }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        .hero-images { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; gap: 5px; z-index: 1; }
+        .hero-images img { width: 33.33%; height: 100%; object-fit: cover; filter: brightness(0.7); }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 2; }
+        .hero-overlay h1 { font-size: 3em; margin-bottom: 20px; font-weight: 700; }
+        .cta-buttons .btn { display: inline-block; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: 600; margin: 0 10px; transition: background-color 0.3s ease; }
+        .btn-primary { background-color: var(--accent-color); color: white; border: 2px solid var(--accent-color); }
+        .btn-primary:hover { background-color: #e66a5c; }
+        .btn-secondary { background-color: transparent; color: white; border: 2px solid white; }
+        .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+        /* Main Content */
+        .main-content { background-color: var(--bg-dark); padding: 40px; border-radius: 10px; margin-top: -80px; position: relative; z-index: 3; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .main-content h2 { color: white; font-size: 2.2em; margin-bottom: 30px; }
+        .content-grid { display: grid; grid-template-columns: 250px 1fr; gap: 30px; }
+
+        /* Sidebar */
+        .sidebar { background-color: #3C3C3C; padding: 20px; border-radius: 8px; color: white; position: sticky; top: 20px; }
+        .sidebar ul { list-style: none; padding: 0; margin: 0 0 30px 0; }
+        .sidebar ul li { margin-bottom: 15px; }
+        .sidebar ul li a { color: white; text-decoration: none; font-weight: 500; display: flex; align-items: center; }
+        .sidebar ul li a img { margin-right: 10px; filter: invert(1); }
+        .sidebar ul li a:hover { color: var(--accent-color); }
+        .btn-post-new { background-color: var(--accent-color); color: white; border: none; padding: 12px 20px; border-radius: 25px; font-size: 1em; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background-color 0.3s ease; }
+        .btn-post-new:hover { background-color: #e66a5c; }
+
+        /* Story Cards */
+        .story-cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .story-card { background-color: var(--card-bg); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.2s ease; }
+        .story-card:hover { transform: translateY(-5px); }
+        .card-header { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color); }
+        .artisan-avatar { width: 36px; height: 36px; border-radius: 50%; margin-right: 10px; object-fit: cover; }
+        .artisan-name { font-weight: 600; color: var(--primary-color); }
+        .card-image { width: 100%; height: 200px; object-fit: cover; }
+        .card-title { font-size: 1.1em; font-weight: 600; color: var(--text-color); padding: 15px; margin: 0; line-height: 1.4; }
+        .card-actions { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px 15px; border-top: 1px solid var(--border-color); }
+        .card-actions button { background: none; border: none; color: var(--secondary-color); cursor: pointer; font-size: 0.9em; display: flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 5px; transition: background-color 0.2s ease; }
+        .card-actions button:hover { background-color: var(--bg-light); }
+        .card-actions button img { width: 18px; height: 18px; filter: invert(50%) sepia(20%) saturate(600%) hue-rotate(200deg); }
+        .shop-now-btn { background-color: var(--accent-color); color: white; padding: 8px 15px; border-radius: 20px; font-weight: 600; }
+        .shop-now-btn:hover { background-color: #e66a5c; }
+
+        /* Floating New Post Button */
+        .floating-post-btn { position: fixed; bottom: 40px; right: 40px; background-color: var(--accent-color); color: white; border: none; width: 120px; height: 120px; border-radius: 50%; font-size: 1.2em; font-weight: 700; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; transition: background-color 0.3s ease, transform 0.3s ease; z-index: 1000; }
+        .floating-post-btn:hover { background-color: #e66a5c; transform: translateY(-5px); }
+
+        footer { background-color: #333; color: white; text-align: center; padding: 20px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <body>
+        <!-- ===== Navbar ===== -->
+        <header class="navbar">
+          <div class="container">
+            <div class="logo">
+              <img src="https://via.placeholder.com/40" alt="Logo">
+              <span>Artisan Echoes</span>
+            </div>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Discover</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </nav>
+            <div class="header-right">
+              <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <button><img src="https://via.placeholder.com/16" alt="Search"></button>
+              </div>
+              <div id="user-section"></div>
+            </div>
+          </div>
+        </header>
+        
+        <!-- ===== Hero Section ===== -->
+        <section class="hero-section">
+          <div class="hero-images">
+            <img src="https://via.placeholder.com/400x300?text=Image+1" alt="Artisan Working 1">
+            <img src="https://via.placeholder.com/400x300?text=Image+2" alt="Artisan Working 2">
+            <img src="https://via.placeholder.com/400x300?text=Image+3" alt="Artisan Working 3">
+          </div>
+          <div class="hero-overlay">
+            <h1>Discover the Soul Behind the Craft</h1>
+            <div class="cta-buttons">
+              <a href="#" class="btn btn-primary">Explore Artisans</a>
+              <a href="sharestory.html" class="btn btn-secondary">Share Your Story</a>
+            </div>
+          </div>
+        </section>
+        
+        <!-- ===== Main Content ===== -->
+        <main class="main-content container">
+          <h2>The Echo Wall</h2>
+          <div class="content-grid">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+              <ul>
+                
+                <li><a href="myposts.html"><img src="https://via.placeholder.com/16" alt="Icon" > My Posts</a></li>
+                <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Saved Posts</a></li>
+                <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Trending Now</a></li>
+                <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Following</a></li>
+              </ul>
+              <button class="btn btn-post-new" id="post-new-content-btn">
+             Post New Content
+              </button>
+              <ul>
+                <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Challenges/Contests</a></li>
+                <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Resources</a></li>
+              </ul>
+            </aside>
+        
+            <!-- Story Cards -->
+            <section class="story-cards-container" id="posts-container">
+                <!-- Existing example story cards -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/32x32" alt="Artisan Avatar" class="artisan-avatar">
+                        <span class="artisan-name">Li Wei Ceramics</span>
+                    </div>
+                    <img src="https://placehold.co/300x200/cccccc/ffffff?text=Artisan+Work" alt="Artisan Work" class="card-image">
+                    <h3 class="card-title">Li Wei Ceramics <br> The Esset of the Earth: My Journey in Clay</h3>
+                    <div class="card-actions">
+                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
+                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
+                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
+                        <button class="shop-now-btn">Shop Now</button>
+                    </div>
+                </div>
+            
+                <!-- Add 4 more default placeholder cards -->
+                <div class="story-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/32x32" class="artisan-avatar" alt="Artisan Avatar">
+                        <span class="artisan-name">Crafty Hands</span>
+                    </div>
+                    <img src="https://placehold.co/300x200/ddddee/ffffff?text=Artisan+Work" class="card-image" alt="Artisan Work">
+                    <h3 class="card-title">Crafty Hands <br> Handcrafted Jewelry Journey</h3>
+                    <div class="card-actions">
+                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
+                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
+                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
+                        <button class="shop-now-btn">Shop Now</button>
+                    </div>
+                </div>
+            
+                <div class="story-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/32x32" class="artisan-avatar" alt="Artisan Avatar">
+                        <span class="artisan-name">Wood Wonders</span>
+                    </div>
+                    <img src="https://placehold.co/300x200/eeccdd/ffffff?text=Artisan+Work" class="card-image" alt="Artisan Work">
+                    <h3 class="card-title">Wood Wonders <br> The Art of Wooden Sculptures</h3>
+                    <div class="card-actions">
+                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
+                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
+                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
+                        <button class="shop-now-btn">Shop Now</button>
+                    </div>
+                </div>
+            
+                <div class="story-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/32x32" class="artisan-avatar" alt="Artisan Avatar">
+                        <span class="artisan-name">Weave Magic</span>
+                    </div>
+                    <img src="https://placehold.co/300x200/ccddff/ffffff?text=Artisan+Work" class="card-image" alt="Artisan Work">
+                    <h3 class="card-title">Weave Magic <br> Handwoven Textiles From Tradition</h3>
+                    <div class="card-actions">
+                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
+                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
+                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
+                        <button class="shop-now-btn">Shop Now</button>
+                    </div>
+                </div>
+            
+                <div class="story-card">
+                    <div class="card-header">
+                        <img src="https://placehold.co/32x32" class="artisan-avatar" alt="Artisan Avatar">
+                        <span class="artisan-name">Stone Sculpt</span>
+                    </div>
+                    <img src="https://placehold.co/300x200/ddffee/ffffff?text=Artisan+Work" class="card-image" alt="Artisan Work">
+                    <h3 class="card-title">Stone Sculpt <br> Sculpting Stories in Stone</h3>
+                    <div class="card-actions">
+                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
+                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
+                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
+                        <button class="shop-now-btn">Shop Now</button>
+                    </div>
+                </div>
+            </section>
+            
+          </div>
+        
+          <!-- Floating Post Button -->
+          <button class="floating-post-btn" onclick="window.location.href='newpost.html'">New Post</button>
+        </main>
+        
+        <!-- ===== Footer ===== -->
+        <footer>
+          <p>&copy; 2025 Artisan Echoes. All rights reserved.</p>
+        </footer>
+        
+        <!-- ===== JS for User Section ===== -->
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const userSection = document.getElementById("user-section");
+          const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        
+          userSection.innerHTML = ""; // Clear previous content
+        
+          if (loggedInUser) {
+            const avatar = document.createElement("img");
+            avatar.src = loggedInUser.photo || "https://via.placeholder.com/32";
+            avatar.alt = "User Avatar";
+            avatar.style.borderRadius = "50%";
+            avatar.style.width = "32px";
+            avatar.style.cursor = "pointer";
+            avatar.addEventListener("click", () => { window.location.href = "profile.html"; });
+            userSection.appendChild(avatar);
+        
+            const logoutBtn = document.createElement("button");
+            logoutBtn.textContent = "Logout";
+            logoutBtn.className = "user-btn";
+            logoutBtn.addEventListener("click", () => {
+              localStorage.removeItem("loggedInUser");
+              location.reload();
+            });
+            userSection.appendChild(logoutBtn);
+          } else {
+            const loginBtn = document.createElement("button");
+            loginBtn.textContent = "Login";
+            loginBtn.className = "user-btn";
+            loginBtn.addEventListener("click", () => { window.location.href = "login.html"; });
+        
+            const signupBtn = document.createElement("button");
+            signupBtn.textContent = "Sign Up";
+            signupBtn.className = "user-btn";
+            signupBtn.addEventListener("click", () => { window.location.href = "register.html"; });
+        
+            userSection.appendChild(loginBtn);
+            userSection.appendChild(signupBtn);
+          }
+        });
+        </script>
+        <script>
+            // Load posts from localStorage
+            document.addEventListener("DOMContentLoaded", () => {
+                const postsContainer = document.getElementById("posts-container");
+                const storedPosts = JSON.parse(localStorage.getItem("artisanPosts")) || [];
+        
+                storedPosts.forEach(post => {
+                    const card = document.createElement("div");
+                    card.classList.add("story-card");
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <img src="https://placehold.co/32x32" alt="Artisan Avatar" class="artisan-avatar">
+                            <span class="artisan-name">${post.postName}</span>
+                        </div>
+                        <img src="${post.image}" alt="Artisan Work" class="card-image">
+                        <h3 class="card-title">${post.title}<br>${post.description}</h3>
+                        <div class="card-actions">
+                            <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
+                            <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
+                            <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
+                            <button class="shop-now-btn">Shop Now</button>
+                        </div>
+                    `;
+                    postsContainer.prepend(card); // New posts at the top
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Find both buttons
+                const newPostBtn = document.getElementById("new-post-btn");
+                const postNewContentBtn = document.getElementById("post-new-content-btn");
+        
+                // Redirect to newpost.html on click
+                if (newPostBtn) {
+                    newPostBtn.addEventListener("click", () => {
+                        window.location.href = "newpost.html";
+                    });
+                }
+                if (postNewContentBtn) {
+                    postNewContentBtn.addEventListener("click", () => {
+                        window.location.href = "newpost.html";
+                    });
+                }
+            });
+        </script>     
+        <script>
+            document.getElementById("my-posts-btn").addEventListener("click", () => {
+                window.location.href = "myposts.html";
+            });
+        </script>
+</body>
+</html>

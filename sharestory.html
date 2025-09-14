@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share Your Story - Artisian Echoes</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #faf3e0; margin: 0; }
+    .header { background: #6d4c41; color: white; padding: 1rem; text-align: center; }
+    .form-container { max-width: 700px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0px 6px 12px rgba(0,0,0,0.1); }
+    label { font-weight: bold; color: #3e2723; }
+    input, textarea {
+      width: 100%; padding: 0.8rem; margin: 0.6rem 0 1rem 0;
+      border: 1px solid #ccc; border-radius: 8px; font-size: 1rem;
+    }
+    textarea { min-height: 150px; resize: vertical; }
+    button {
+      background: #6d4c41; color: white; border: none; padding: 0.8rem 1.5rem;
+      border-radius: 8px; cursor: pointer; font-size: 1rem; transition: 0.3s;
+    }
+    button:hover { background: #4e342e; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Share Your Story</h1>
+  </div>
+
+  <div class="form-container">
+    <form id="storyForm">
+      <label for="title">Story Title</label>
+      <input type="text" id="title" placeholder="Enter your story title..." required>
+
+      <label for="content">Your Story</label>
+      <textarea id="content" placeholder="Write your story here..." required></textarea>
+
+      <button type="submit">Publish Story</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("storyForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const title = document.getElementById("title").value;
+      const content = document.getElementById("content").value;
+      const date = new Date().toLocaleString();
+
+      const newPost = { title, content, date };
+      const posts = JSON.parse(localStorage.getItem("posts")) || [];
+      posts.push(newPost);
+      localStorage.setItem("posts", JSON.stringify(posts));
+
+      alert("Story Published Successfully!");
+      window.location.href = "myposts.html";
+    });
+  </script>
+</body>
+</html>
