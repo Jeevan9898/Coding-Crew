@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - Artisan Echoes</title>
+<title>Login / Signup - Artisan Echoes</title>
 <style>
   body { margin: 0; font-family: Arial,sans-serif; background: #fdfaf6; display: flex; height: 100vh; }
   .container { display: flex; width: 100%; }
   .left { flex:1; background:#f0e6e0; display:flex; justify-content:center; align-items:center; flex-direction:column; }
   .left img { width:200px;height:200px;border-radius:50%;border:4px solid #6d4c41; object-fit:cover; }
-  .left h2 { margin-top:15px;color:#3e2723; }
+  .left h2 { margin-top:15px;color:#3e2723; text-align:center; }
   .right { flex:1.2; display:flex; justify-content:center; align-items:center; background:#fff; box-shadow:-4px 0 10px rgba(0,0,0,0.1); }
   .form-container { width:80%; max-width:400px; }
   h2 { text-align:center; color:#4e342e; margin-bottom:20px; }
@@ -17,6 +17,7 @@
   button { background:#FD7B6B; color:white; font-weight:bold; border:none; cursor:pointer; transition:0.3s; }
   button:hover { background:#e66a5c; }
   .error { color:red; font-size:14px; text-align:center; }
+  .switch-link { text-align:center; margin-top:10px; cursor:pointer; color:#FD7B6B; font-weight:bold; }
 </style>
 </head>
 <body>
@@ -28,15 +29,16 @@
   <div class="right">
     <div class="form-container">
       <h2 id="formTitle">Login</h2>
-      <form id="loginForm">
+      <form id="authForm">
         <div id="extraFields">
           <input type="text" id="name" placeholder="Enter your name">
           <textarea id="bio" placeholder="Short bio..."></textarea>
         </div>
         <input type="email" id="email" placeholder="Enter your email" required>
-        <button type="submit">Continue</button>
+        <button type="submit" id="submitBtn">Continue</button>
         <p id="errorMsg" class="error"></p>
       </form>
+      <p class="switch-link" id="switchMode"></p>
     </div>
   </div>
 </div>
@@ -45,39 +47,59 @@
 const extraFields = document.getElementById("extraFields");
 const formTitle = document.getElementById("formTitle");
 const errorMsg = document.getElementById("errorMsg");
-const form = document.getElementById("loginForm");
+const form = document.getElementById("authForm");
+const switchMode = document.getElementById("switchMode");
+const submitBtn = document.getElementById("submitBtn");
 
 let savedUser = JSON.parse(localStorage.getItem("artisanUser"));
 let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
-// If already logged in → redirect to index.html
-if(loggedInUser) {
-  window.location.href = "index.html";
-}
-
-// If user exists → show only email login
-if(savedUser) {
+function setLoginMode() {
   extraFields.style.display = "none";
   formTitle.textContent = "Login";
-} else {
-  formTitle.textContent = "Register";
+  submitBtn.textContent = "Login";
+  switchMode.textContent = "Don't have an account? Sign Up";
 }
 
+function setSignupMode() {
+  extraFields.style.display = "block";
+  formTitle.textContent = "Sign Up";
+  submitBtn.textContent = "Sign Up";
+  switchMode.textContent = "Already have an account? Login";
+}
+
+// Auto-redirect if already logged in
+if(loggedInUser) window.location.href = "index.html";
+
+// Initialize mode based on whether user exists
+if(savedUser) {
+  setLoginMode();
+} else {
+  setSignupMode();
+}
+
+// Switch login/signup
+switchMode.addEventListener("click", () => {
+  if(extraFields.style.display === "none") setSignupMode();
+  else setLoginMode();
+});
+
+// Form submit
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   errorMsg.textContent = "";
   const email = document.getElementById("email").value.trim();
 
-  if(savedUser) {
-    // Login
-    if(email === savedUser.email) {
+  if(extraFields.style.display === "none") {
+    // Login mode
+    if(savedUser && email === savedUser.email) {
       localStorage.setItem("loggedInUser", JSON.stringify(savedUser));
       window.location.href = "index.html";
     } else {
-      errorMsg.textContent = "❌ Email not found. Please try again.";
+      errorMsg.textContent = "❌ Email not found. Please create an account first.";
     }
   } else {
-    // Registration
+    // Signup mode
     const name = document.getElementById("name").value.trim();
     const bio = document.getElementById("bio").value.trim();
     if(!name || !bio || !email) {
