@@ -431,7 +431,22 @@
       });
   });
   </script>
-  
+  <script>
+    function loadProfile() {
+  const profile = JSON.parse(localStorage.getItem("loggedInUser")) || {
+    name: "Your Name",
+    bio: "Tell something about yourself.",
+    photo: "https://via.placeholder.com/120",
+    headline: "Your headline here"
+  };
+
+  document.getElementById("profile-avatar").src = profile.photo || "https://via.placeholder.com/120";
+  document.getElementById("profile-name").textContent = profile.name || "Your Name";
+  document.getElementById("profile-headline").textContent = profile.headline || "Your headline here";
+  document.getElementById("bio-content").textContent = profile.bio || "Tell something about yourself.";
+}
+
+  </script>
   
 </body>
 </html>
