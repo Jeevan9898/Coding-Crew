@@ -123,6 +123,20 @@
         .floating-post-btn:hover { background-color: #e66a5c; transform: translateY(-5px); }
 
         footer { background-color: #333; color: white; text-align: center; padding: 20px; margin-top: 50px; }
+        .feed { max-width: 900px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+
+.story-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+.card-header { display: flex; align-items: center; padding: 10px; }
+.artisan-avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; }
+.artisan-name { font-weight: bold; }
+.card-image { width: 100%; height: 200px; object-fit: cover; }
+.card-title { padding: 10px; font-size: 16px; font-weight: bold; }
+
+/* Actions */
+.card-actions { display: flex; justify-content: space-around; align-items: center; padding: 10px; border-top: 1px solid #eee; }
+.card-actions button { background: none; border: none; cursor: pointer; font-size: 14px; font-weight: bold; display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 6px; }
+.card-actions button:hover { background: #f0f0f0; }
+.like-count { font-weight: normal; }
     </style>
 </head>
 <body>
@@ -186,96 +200,116 @@
               <button class="btn btn-post-new" id="post-new-content-btn">
              Post New Content
               </button>
-              <ul>
-                <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Challenges/Contests</a></li>
-                <li><a href="#"><img src="https://via.placeholder.com/16" alt="Icon"> Resources</a></li>
-              </ul>
             </aside>
         
-            <!-- Story Cards -->
-            <section class="story-cards-container" id="posts-container">
-                <!-- Existing example story cards -->
-                <div class="story-card">
-                    <div class="card-header">
-                        <img src="https://placehold.co/32x32" alt="Artisan Avatar" class="artisan-avatar">
-                        <span class="artisan-name">Li Wei Ceramics</span>
-                    </div>
-                    <img src="https://placehold.co/300x200/cccccc/ffffff?text=Artisan+Work" alt="Artisan Work" class="card-image">
-                    <h3 class="card-title">Li Wei Ceramics <br> The Esset of the Earth: My Journey in Clay</h3>
-                    <div class="card-actions">
-                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
-                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
-                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
-                        <button class="shop-now-btn">Shop Now</button>
-                    </div>
-                </div>
-            
-                <!-- Add 4 more default placeholder cards -->
-                <div class="story-card">
-                    <div class="card-header">
-                        <img src="https://placehold.co/32x32" class="artisan-avatar" alt="Artisan Avatar">
-                        <span class="artisan-name">Crafty Hands</span>
-                    </div>
-                    <img src="https://placehold.co/300x200/ddddee/ffffff?text=Artisan+Work" class="card-image" alt="Artisan Work">
-                    <h3 class="card-title">Crafty Hands <br> Handcrafted Jewelry Journey</h3>
-                    <div class="card-actions">
-                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
-                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
-                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
-                        <button class="shop-now-btn">Shop Now</button>
-                    </div>
-                </div>
-            
-                <div class="story-card">
-                    <div class="card-header">
-                        <img src="https://placehold.co/32x32" class="artisan-avatar" alt="Artisan Avatar">
-                        <span class="artisan-name">Wood Wonders</span>
-                    </div>
-                    <img src="https://placehold.co/300x200/eeccdd/ffffff?text=Artisan+Work" class="card-image" alt="Artisan Work">
-                    <h3 class="card-title">Wood Wonders <br> The Art of Wooden Sculptures</h3>
-                    <div class="card-actions">
-                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
-                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
-                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
-                        <button class="shop-now-btn">Shop Now</button>
-                    </div>
-                </div>
-            
-                <div class="story-card">
-                    <div class="card-header">
-                        <img src="https://placehold.co/32x32" class="artisan-avatar" alt="Artisan Avatar">
-                        <span class="artisan-name">Weave Magic</span>
-                    </div>
-                    <img src="https://placehold.co/300x200/ccddff/ffffff?text=Artisan+Work" class="card-image" alt="Artisan Work">
-                    <h3 class="card-title">Weave Magic <br> Handwoven Textiles From Tradition</h3>
-                    <div class="card-actions">
-                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
-                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
-                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
-                        <button class="shop-now-btn">Shop Now</button>
-                    </div>
-                </div>
-            
-                <div class="story-card">
-                    <div class="card-header">
-                        <img src="https://placehold.co/32x32" class="artisan-avatar" alt="Artisan Avatar">
-                        <span class="artisan-name">Stone Sculpt</span>
-                    </div>
-                    <img src="https://placehold.co/300x200/ddffee/ffffff?text=Artisan+Work" class="card-image" alt="Artisan Work">
-                    <h3 class="card-title">Stone Sculpt <br> Sculpting Stories in Stone</h3>
-                    <div class="card-actions">
-                        <button><img src="https://placehold.co/16x16" alt="Like"> Like</button>
-                        <button><img src="https://placehold.co/16x16" alt="Comment"> Comment</button>
-                        <button><img src="https://placehold.co/16x16" alt="Save"> Save</button>
-                        <button class="shop-now-btn">Shop Now</button>
-                    </div>
-                </div>
-            </section>
-            
+         <!-- Story Cards -->
+<section class="story-cards-container" id="posts-container">
+  <div class="feed">
+
+    <!-- Post 1 -->
+    <div class="story-card">
+      <div class="card-header">
+        <img src="https://via.placeholder.com/40" class="artisan-avatar">
+        <span class="artisan-name">John Doe</span>
+      </div>
+      <img src="https://via.placeholder.com/400x250?text=Handmade+Pottery" class="card-image">
+      <h3 class="card-title">Beautiful Handmade Pottery</h3>
+      <div class="card-actions">
+        <button class="like-btn">❤️ <span class="like-count">0</span></button>
+        <button class="comment-btn">💬 Comment</button>
+        <button class="save-btn">📌 Save</button>
+        <button class="shop-now-btn">🛒 Shop Now</button>
+      </div>
+    </div>
+
+    <!-- Post 2 -->
+    <div class="story-card">
+      <div class="card-header">
+        <img src="https://via.placeholder.com/40" class="artisan-avatar">
+        <span class="artisan-name">Emily Rose</span>
+      </div>
+      <img src="https://via.placeholder.com/400x250?text=Handwoven+Basket" class="card-image">
+      <h3 class="card-title">Handwoven Basket</h3>
+      <div class="card-actions">
+        <button class="like-btn">❤️ <span class="like-count">0</span></button>
+        <button class="comment-btn">💬 Comment</button>
+        <button class="save-btn">📌 Save</button>
+        <button class="shop-now-btn">🛒 Shop Now</button>
+      </div>
+    </div>
+
+    <!-- Post 3 -->
+    <div class="story-card">
+      <div class="card-header">
+        <img src="https://via.placeholder.com/40" class="artisan-avatar">
+        <span class="artisan-name">David Smith</span>
+      </div>
+      <img src="https://via.placeholder.com/400x250?text=Custom+Jewelry" class="card-image">
+      <h3 class="card-title">Custom Jewelry Design</h3>
+      <div class="card-actions">
+        <button class="like-btn">❤️ <span class="like-count">0</span></button>
+        <button class="comment-btn">💬 Comment</button>
+        <button class="save-btn">📌 Save</button>
+        <button class="shop-now-btn">🛒 Shop Now</button>
+      </div>
+    </div>
+
+    <!-- Artifact Post 4 -->
+    <div class="story-card">
+      <div class="card-header">
+        <img src="https://via.placeholder.com/40" class="artisan-avatar">
+        <span class="artisan-name">Museum Curator</span>
+      </div>
+      <img src="https://source.unsplash.com/400x300/?ancient,vase,artifact" class="card-image" alt="Ancient Vase">
+      <h3 class="card-title">Ancient Vase 🏺</h3>
+      <div class="card-actions">
+        <button class="like-btn">❤️ <span class="like-count">0</span></button>
+        <button class="comment-btn">💬 Comment</button>
+        <button class="save-btn">📌 Save</button>
+        <button class="shop-now-btn">🛒 Shop Now</button>
+      </div>
+    </div>
+
+    <!-- Artifact Post 5 -->
+    <div class="story-card">
+      <div class="card-header">
+        <img src="https://via.placeholder.com/40" class="artisan-avatar">
+        <span class="artisan-name">Heritage Gallery</span>
+      </div>
+      <img src="https://source.unsplash.com/400x300/?historic,sculpture,artifact" class="card-image" alt="Historic Sculpture">
+      <h3 class="card-title">Historic Sculpture 🗿</h3>
+      <div class="card-actions">
+        <button class="like-btn">❤️ <span class="like-count">0</span></button>
+        <button class="comment-btn">💬 Comment</button>
+        <button class="save-btn">📌 Save</button>
+        <button class="shop-now-btn">🛒 Shop Now</button>
+      </div>
+    </div>
+
+    <!-- Artifact Post 6 -->
+    <div class="story-card">
+      <div class="card-header">
+        <img src="https://via.placeholder.com/40" class="artisan-avatar">
+        <span class="artisan-name">Collector’s Choice</span>
+      </div>
+      <img src="https://source.unsplash.com/400x300/?medieval,sword,artifact" class="card-image" alt="Medieval Sword">
+      <h3 class="card-title">Medieval Sword ⚔️</h3>
+      <div class="card-actions">
+        <button class="like-btn">❤️ <span class="like-count">0</span></button>
+        <button class="comment-btn">💬 Comment</button>
+        <button class="save-btn">📌 Save</button>
+        <button class="shop-now-btn">🛒 Shop Now</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
           </div>
         
           <!-- Floating Post Button -->
           <button class="floating-post-btn" onclick="window.location.href='newpost.html'">New Post</button>
+          
         </main>
         
         <!-- ===== Footer ===== -->
@@ -447,6 +481,57 @@
 }
 
   </script>
+   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Like functionality
+      document.querySelectorAll(".like-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          let count = button.querySelector(".like-count");
+          count.textContent = parseInt(count.textContent) + 1;
+        });
+      });
+
+      // Comment functionality
+      document.querySelectorAll(".comment-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          window.location.href = "comment.html"; 
+        });
+      });
+
+      // Save functionality
+      document.querySelectorAll(".save-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          let card = button.closest(".story-card");
+          let savedPosts = JSON.parse(localStorage.getItem("savedPosts")) || [];
+
+          let post = {
+            author: card.querySelector(".artisan-name").textContent,
+            title: card.querySelector(".card-title").textContent,
+            image: card.querySelector(".card-image").src
+          };
+
+          savedPosts.push(post);
+          localStorage.setItem("savedPosts", JSON.stringify(savedPosts));
+          alert("✅ Post saved to your profile!");
+        });
+      });
+
+      // Shop Now functionality
+      document.querySelectorAll(".shop-now-btn").forEach(button => {
+        button.addEventListener("click", () => {
+          window.location.href = "shop.html";
+        });
+      });
+    });
+  </script>
+<script>
+document.querySelectorAll(".story-card").forEach((card, index) => {
+  const postId = index + 1; // or the ID you assign
+  const commentCount = localStorage.getItem(`post_${postId}_commentCount`) || 0;
+  card.querySelector(".comment-count").textContent = commentCount;
+});
+window.location.href = `shopnow.html?title=${encodeURIComponent(post.title)}&desc=${encodeURIComponent(post.description)}&img=${encodeURIComponent(post.image)}&price=$50`;
+</script>
   
 </body>
 </html>
