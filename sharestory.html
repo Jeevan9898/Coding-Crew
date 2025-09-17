@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Share Your Story - Artisian Echoes</title>
+  <title>Share Your Story - Artisan Echoes</title>
   <link rel="stylesheet" href="style.css">
   <style>
     body { font-family: 'Poppins', sans-serif; background: #faf3e0; margin: 0; }
@@ -46,13 +46,15 @@
       const content = document.getElementById("content").value;
       const date = new Date().toLocaleString();
 
+      // Save new story in localStorage
       const newPost = { title, content, date };
       const posts = JSON.parse(localStorage.getItem("posts")) || [];
       posts.push(newPost);
       localStorage.setItem("posts", JSON.stringify(posts));
 
       alert("Story Published Successfully!");
-      window.location.href = "myposts.html";
+      // Redirect to Trending Now page
+      window.location.href = "trending.html";
     });
   </script>
 </body>
