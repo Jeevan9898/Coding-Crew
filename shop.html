@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Now - Artisan Echoes</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
+    .container { max-width: 900px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; gap: 20px; }
+    img { border-radius: 10px; max-width: 400px; }
+    .details { flex: 1; }
+    .details h2 { margin: 0 0 10px; color: #5C5470; }
+    .price { font-size: 20px; font-weight: bold; color: #FD7B6B; margin: 10px 0; }
+    button { padding: 12px 20px; border: none; background: #FD7B6B; color: white; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 15px; }
+    button:hover { background: #e66a5c; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img id="product-img" src="https://via.placeholder.com/400" alt="Product">
+    <div class="details">
+      <h2 id="product-title">Product Title</h2>
+      <p id="product-desc">Product description goes here...</p>
+      <p class="price" id="product-price">$50</p>
+      <button id="add-to-cart-btn">Add to Cart</button>
+    </div>
+  </div>
+
+  <script>
+    // Get product details from query params
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get("title") || "Artisan Craft";
+    const desc = params.get("desc") || "Beautiful handmade product.";
+    const img = params.get("img") || "https://via.placeholder.com/400";
+    const price = params.get("price") || "$50";
+
+    // Fill page
+    document.getElementById("product-title").innerText = title;
+    document.getElementById("product-desc").innerText = desc;
+    document.getElementById("product-img").src = img;
+    document.getElementById("product-price").innerText = price;
+
+    // Add to Cart
+    document.getElementById("add-to-cart-btn").addEventListener("click", () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({ title, desc, img, price });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("✅ Added to cart!");
+    });
+  </script>
+</body>
+</html>
