@@ -3,158 +3,206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trending Stories - Artisan Echoes</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Trending Now - Artisian Echos</title>
   <style>
-    body { font-family: 'Poppins', sans-serif; background: #faf3e0; margin: 0; }
-    .header { background: #6d4c41; color: white; padding: 1rem; text-align: center; }
-    .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-    .story-card {
-      background: white; border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
     }
-    .story-card h3 { margin: 0 0 0.5rem 0; color: #3e2723; }
-    .story-card p { margin: 0.5rem 0; color: #5d4037; }
-    .story-card .card-date { font-size: 0.85rem; color: #8d6e63; margin-bottom: 0.5rem; }
-    .card-actions { display: flex; gap: 15px; margin-top: 10px; flex-wrap: wrap; }
-    .card-actions button {
-      background: #6d4c41; color: white; border: none; padding: 0.5rem 1rem;
-      border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: 0.3s;
+    header {
+      background: #222;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
     }
-    .card-actions button:hover { background: #4e342e; }
+    header h1 {
+      font-size: 22px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #ff9800;
+    }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      font-size: 36px;
+      font-weight: bold;
+    }
+    .section-title {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 28px;
+      color: #222;
+    }
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .filter-btn {
+      padding: 10px 20px;
+      border: none;
+      background: #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: #ff9800;
+      color: white;
+    }
+    .trending-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 0 40px 40px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease-in-out;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 15px;
+    }
+    .card-content h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #444;
+    }
+    .card-content p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #ff9800;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      text-align: center;
+      margin: 20px auto;
+      display: block;
+      width: 200px;
+    }
+    .btn:hover {
+      background: #e68900;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>Trending Stories</h1>
+  <header>
+    <h1>Artisian Echos</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="discover.html">Discover</a>
+      <a href="community.html">Community</a>
+      <a href="trending.html">Trending Now</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    Trending Now ✨
   </div>
 
-  <div class="container" id="trendingContainer">
-    <!-- Stories will be dynamically inserted here -->
+  <h2 class="section-title">🔥 Hot Picks of the Week</h2>
+
+  <!-- Filter Buttons -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterItems('all')">All</button>
+    <button class="filter-btn" onclick="filterItems('craft')">Crafts</button>
+    <button class="filter-btn" onclick="filterItems('art')">Art</button>
+    <button class="filter-btn" onclick="filterItems('jewelry')">Jewelry</button>
+    <button class="filter-btn" onclick="filterItems('sculpture')">Sculptures</button>
   </div>
+
+  <div class="trending-grid">
+    <div class="card craft">
+      <img src="https://images.unsplash.com/photo-1606813902919-0c3d6e2713f0?auto=format&fit=crop&w=800&q=80" alt="Pottery">
+      <div class="card-content">
+        <h3>Handmade Pottery</h3>
+        <p>Elegant handcrafted pottery trending this week.</p>
+      </div>
+    </div>
+
+    <div class="card art">
+      <img src="https://images.unsplash.com/photo-1549887534-9e7471a0a62f?auto=format&fit=crop&w=800&q=80" alt="Abstract Canvas">
+      <div class="card-content">
+        <h3>Abstract Canvas</h3>
+        <p>Modern abstract art loved by the community.</p>
+      </div>
+    </div>
+
+    <div class="card jewelry">
+      <img src="https://images.unsplash.com/photo-1553531888-a8c55d30f5c5?auto=format&fit=crop&w=800&q=80" alt="Jewelry">
+      <div class="card-content">
+        <h3>Handcrafted Jewelry</h3>
+        <p>Unique jewelry pieces making waves.</p>
+      </div>
+    </div>
+
+    <div class="card sculpture">
+      <img src="https://images.unsplash.com/photo-1584999734480-84d0d1d6c568?auto=format&fit=crop&w=800&q=80" alt="Wooden Sculpture">
+      <div class="card-content">
+        <h3>Wooden Sculpture</h3>
+        <p>Beautifully carved sculpture trending now.</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="#" class="btn">See More</a>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const container = document.getElementById("trendingContainer");
-      let posts = JSON.parse(localStorage.getItem("posts")) || [];
+    function filterItems(category) {
+      let cards = document.querySelectorAll('.card');
+      let buttons = document.querySelectorAll('.filter-btn');
 
-      // Load existing likes and comments from localStorage
-      let likesData = JSON.parse(localStorage.getItem("likesData")) || {};
-      let commentsData = JSON.parse(localStorage.getItem("commentsData")) || {};
+      // Highlight active button
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
 
-      function renderPosts() {
-        container.innerHTML = '';
-        posts.reverse().forEach((post, index) => {
-          const card = document.createElement("div");
-          card.classList.add("story-card");
-          card.innerHTML = `
-            <h3>${post.title}</h3>
-            <p>${post.content}</p>
-            <div class="card-date">${post.date}</div>
-            <div class="card-actions">
-              <button class="like-btn" data-id="${index}">❤️ Like (<span>${likesData[index] || 0}</span>)</button>
-              <button class="comment-btn" data-id="${index}">💬 Comment (<span>${commentsData[index]?.length || 0}</span>)</button>
-              <button class="save-btn" data-id="${index}">📌 Save</button>
-              <button class="delete-btn" data-id="${index}" style="background:red;">🗑️ Delete</button>
-            </div>
-            <div class="comments-section" id="comments-${index}" style="margin-top:10px;"></div>
-          `;
-          container.appendChild(card);
-
-          const commentsSection = card.querySelector(`#comments-${index}`);
-
-          // Load saved comments
-          if (commentsData[index]) {
-            commentsData[index].forEach(comment => addCommentElement(commentsSection, comment, index));
-          }
-        });
-      }
-
-      renderPosts();
-
-      // Event delegation for buttons
-      container.addEventListener("click", (e) => {
-        const btn = e.target.closest("button");
-        if (!btn) return;
-
-        const postId = parseInt(btn.dataset.id);
-
-        // Like button
-        if (btn.classList.contains("like-btn")) {
-          likesData[postId] = (likesData[postId] || 0) + 1;
-          localStorage.setItem("likesData", JSON.stringify(likesData));
-          btn.querySelector("span").textContent = likesData[postId];
-        }
-
-        // Comment button
-        if (btn.classList.contains("comment-btn")) {
-          const commentText = prompt("Write your comment:");
-          if (commentText) {
-            commentsData[postId] = commentsData[postId] || [];
-            commentsData[postId].push(commentText);
-            localStorage.setItem("commentsData", JSON.stringify(commentsData));
-            addCommentElement(document.getElementById(`comments-${postId}`), commentText, postId);
-            btn.querySelector("span").textContent = commentsData[postId].length;
-          }
-        }
-
-        // Save button
-        if (btn.classList.contains("save-btn")) {
-          let savedPosts = JSON.parse(localStorage.getItem("savedPosts")) || [];
-          const post = posts[postId];
-          if (!savedPosts.find(p => p.title === post.title && p.content === post.content)) {
-            savedPosts.push(post);
-            localStorage.setItem("savedPosts", JSON.stringify(savedPosts));
-            alert("Post saved to your profile!");
-          } else {
-            alert("This post is already saved!");
-          }
-        }
-
-        // Delete button
-        if (btn.classList.contains("delete-btn")) {
-          if (confirm("Are you sure you want to delete this story?")) {
-            posts.splice(postId, 1);
-            localStorage.setItem("posts", JSON.stringify(posts.reverse()));
-            // Remove likes and comments for this post
-            delete likesData[postId];
-            delete commentsData[postId];
-            localStorage.setItem("likesData", JSON.stringify(likesData));
-            localStorage.setItem("commentsData", JSON.stringify(commentsData));
-            renderPosts();
-          }
+      // Show/Hide cards
+      cards.forEach(card => {
+        if (category === 'all' || card.classList.contains(category)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
         }
       });
-
-      function addCommentElement(container, text, postId) {
-        const commentDiv = document.createElement("div");
-        commentDiv.style.display = "flex";
-        commentDiv.style.justifyContent = "space-between";
-        commentDiv.style.alignItems = "center";
-        commentDiv.style.background = "#f5f5f5";
-        commentDiv.style.padding = "5px 10px";
-        commentDiv.style.marginTop = "5px";
-        commentDiv.style.borderRadius = "6px";
-
-        commentDiv.innerHTML = `
-          <span>${text}</span>
-          <button style="background:red;color:white;border:none;padding:2px 6px;border-radius:4px;cursor:pointer;">X</button>
-        `;
-
-        // Delete comment functionality
-        commentDiv.querySelector("button").addEventListener("click", () => {
-          commentsData[postId] = commentsData[postId].filter(c => c !== text);
-          localStorage.setItem("commentsData", JSON.stringify(commentsData));
-          commentDiv.remove();
-          // Update comment count
-          const commentBtn = document.querySelector(`.comment-btn[data-id="${postId}"]`);
-          commentBtn.querySelector("span").textContent = commentsData[postId].length;
-        });
-
-        container.appendChild(commentDiv);
-      }
-    });
+    }
   </script>
 
 </body>
